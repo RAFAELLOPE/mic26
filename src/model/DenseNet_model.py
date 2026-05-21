@@ -1,4 +1,3 @@
-import torch
 from torch import nn
 from monai.networks.nets import DenseNet121
 
@@ -16,6 +15,7 @@ class DenseNetModel(nn.Module):
             norm='batch',
             dropout_prob=0.0
     ):
+        super(DenseNetModel, self).__init__()
         default_dense_net = DenseNet121(
             spatial_dims=spatial_dims,
             in_channels=in_channels,

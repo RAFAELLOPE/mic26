@@ -13,5 +13,5 @@ class Config:
     self.n_epochs = 50
     self.learning_rate = 0.0001
     self.batch_size = 16
-    self.patch_size= 64
+    self.classification_threshold= 0.5
     self.test_results_dir = '.\\data'
