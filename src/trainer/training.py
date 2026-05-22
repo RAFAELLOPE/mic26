@@ -14,8 +14,8 @@ from monai.transforms import (
     Lambdad
 )
 from monai.data import Dataset, DataLoader
-import sys
-sys.path.append(os.path.abspath('.'))
+# import sys
+# sys.path.append(os.path.abspath('.'))
 from src.loader.load_data import PDLoader
 from src.model.DenseNet_model import DenseNetModel
 from src.trainer.inference import InferenceAgent

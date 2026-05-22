@@ -1,7 +1,5 @@
 import torch
 import os
-import sys
-sys.path.append(os.path.abspath('.'))
 from src.model.DenseNet_model import DenseNetModel
 
 class InferenceAgent:
