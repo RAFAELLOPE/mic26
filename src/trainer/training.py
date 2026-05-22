@@ -114,7 +114,7 @@ class Experiment:
         # Loop over minibatches
         for i, batch in enumerate(self.train_loader):
             inputs = batch["image"].to(self.device).type(torch.float)
-            targets = batch["label"].to(self.device).unsqueeze(1).type(torch.long)
+            targets = batch["label"].to(self.device).unsqueeze(1).type(torch.float)
             predictions = self.model(inputs)
             loss = self.loss_function(predictions, targets)
             
@@ -147,7 +147,7 @@ class Experiment:
         with torch.no_grad():
             for i, batch in enumerate(self.val_loader):
                 inputs = batch["image"].to(self.device).type(torch.float)
-                targets = batch["label"].to(self.device).unsqueeze(1).type(torch.long)
+                targets = batch["label"].to(self.device).unsqueeze(1).type(torch.float)
                 predictions = self.model(inputs)
 
                 loss = self.loss_function(predictions, targets)
