@@ -19,10 +19,9 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 file_model = "model_PDw.pth"
 
 # 2. DATOS
-# path_control = sorted(glob.glob('./data/pd_norm/CTL/**/ws*.nii'))
-# path_pd = sorted(glob.glob('./data/pd_norm/PD/**/ws*.nii'))
-path_control = sorted(glob.glob('C:\\Users\\34616\\Documents\\MATLAB Drive\\neuro_db_T1_seg\\Control\\**\\mwp1*.nii'))
-path_pd = sorted(glob.glob('C:\\Users\\34616\\Documents\\MATLAB Drive\\neuro_db_T1_seg\\PD\\**\\mwp1*.nii'))
+path_control = sorted(glob.glob('./data/pd_norm/CTL/**/ws*.nii'))
+path_pd = sorted(glob.glob('./data/pd_norm/PD/**/ws*.nii'))
+
 
 # Forzamos balanceo exacto
 min_samples = min(len(path_control), len(path_pd))

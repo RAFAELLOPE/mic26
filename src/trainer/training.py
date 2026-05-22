@@ -240,7 +240,7 @@ class Experiment:
         self.save_model_parameters()
 
         self.time_end = time.time()
-        print(f"Run complete. Total tiem:{time.strftime('%H:%M:%S', time.gmtime(self.time_end - self.time_start))}")
+        print(f"Run complete. Total time:{time.strftime('%H:%M:%S', time.gmtime(self.time_end - self.time_start))}")
         return result
 
 
