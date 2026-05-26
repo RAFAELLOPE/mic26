@@ -2,20 +2,7 @@
 import time
 import os
 import torch
-from monai.transforms import (
-    Compose, 
-    LoadImaged, 
-    EnsureChannelFirstd, 
-    Orientationd,
-    NormalizeIntensityd, 
-    CropForegroundd, 
-    Resized, 
-    ToTensord, 
-    Lambdad
-)
-from monai.data import Dataset, DataLoader
-# import sys
-# sys.path.append(os.path.abspath('.'))
+from monai.data import DataLoader
 from src.loader.load_data import PDLoader
 from src.model.DenseNet_model import DenseNetModel
 from src.trainer.inference import InferenceAgent
@@ -36,41 +23,23 @@ class Experiment:
         self.out_dir = os.path.join(config.test_results_dir, dirname)
         os.makedirs(self.out_dir, exist_ok=True)
 
-        # Create data loaders
-        transforms = Compose([
-            LoadImaged(keys=["image"]),
-            EnsureChannelFirstd(keys=["image"]),
-            Lambdad(keys=["image"], func=lambda x: torch.nan_to_num(x, nan=0.0)),
-            Orientationd(keys=["image"], axcodes="RAS"),
-            NormalizeIntensityd(keys=["image"]),
-            Resized(keys=["image"], spatial_size=(128, 128, 128)),
-            ToTensord(keys=["image", "label"]),
-        ])
+        
 
         pd_loader = PDLoader(config)
 
         self.train_loader = DataLoader(
-            Dataset(
-                pd_loader.train_files,
-                transform=transforms
-            ), 
+            pd_loader.train_ds, 
             batch_size=config.batch_size, 
             shuffle=True
         )
         
         self.val_loader = DataLoader(
-            Dataset(
-                pd_loader.val_files,
-                transform=transforms
-            ), 
+            pd_loader.val_ds, 
             batch_size=config.batch_size
         )
 
         self.test_loader = DataLoader(
-            Dataset(
-                pd_loader.test_files,
-                transform=transforms
-            ), 
+            pd_loader.test_ds, 
             batch_size=1
         )
 
