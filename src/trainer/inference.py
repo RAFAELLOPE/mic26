@@ -18,7 +18,7 @@ class InferenceAgent:
                 out_channels=1
             )
 
-        if parameter_file_path:
+        if os.path.exists(parameter_file_path):
             self.model.load_state_dict(
                 torch.load(
                     parameter_file_path,

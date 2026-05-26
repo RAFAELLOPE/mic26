@@ -7,6 +7,7 @@ from src.loader.load_data import PDLoader
 from src.model.DenseNet_model import DenseNetModel
 from src.trainer.inference import InferenceAgent
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 class Experiment:
@@ -16,6 +17,8 @@ class Experiment:
         self.time_start = ""
         self.time_end = ""
         self.epoch = 0
+        self.best_val_loss = float('inf')
+        self.best_model = None
         self.classification_threshold = config.classification_threshold
 
         # Create output folders
@@ -23,7 +26,6 @@ class Experiment:
         self.out_dir = os.path.join(config.test_results_dir, dirname)
         os.makedirs(self.out_dir, exist_ok=True)
 
-        
 
         pd_loader = PDLoader(config)
 
@@ -136,7 +138,10 @@ class Experiment:
         Saves model parameters to a file in results directory
         """
         path = os.path.join(self.out_dir, "model.pth")
-        torch.save(self.model.state_dict(), path)
+        if self.best_model is not None:
+            torch.save(self.best_model, path)
+        else:
+            torch.save(self.model.state_dict(), path)
 
     def load_model_parameters(self, path=''):
         """
@@ -163,7 +168,11 @@ class Experiment:
         print("Testing...")
         self.model.eval()
 
-        inference_agent = InferenceAgent(model=self.model, device=self.device)
+        inference_agent = InferenceAgent(
+            parameter_file_path=os.path.join(self.out_dir, "model.pth"),
+            model=self.model, 
+            device=self.device
+        )
 
         out_dict = {}
         out_dict['probabilities'] = []
@@ -183,7 +192,29 @@ class Experiment:
         print("\nTesting complete.")
         return out_dict
 
-
+    def save_plots(self, train_loss, val_loss):
+        """
+        Saves training and validation loss plots to results directory
+        """
+        path = os.path.join(self.out_dir, "loss.png")
+        plt.figure(figsize=(10, 7))
+        plt.plot(
+            train_loss, 
+            color='orange', 
+            linestyle='-', 
+            label='train loss'
+        )
+        plt.plot(
+            val_loss, 
+            color='red', 
+            linestyle='-', 
+            label='validataion loss'
+        )
+        plt.xlabel('Epochs')
+        plt.ylabel('Loss')
+        plt.legend()
+        plt.savefig(path)
+        plt.close()
 
     def run(self):
         """
@@ -203,9 +234,14 @@ class Experiment:
             result['epoch'].append(self.epoch)
             result['train_loss'].append(np.mean(train_loss_list))
             result['val_loss'].append(np.mean(val_loss_list))
+            # Check best model parameters
+            if np.mean(val_loss_list) < self.best_val_loss:
+                self.best_val_loss = np.mean(val_loss_list)
+                self.best_model = self.model.state_dict()
             print(f"Epoch: {self.epoch + 1}, Train error: {np.mean(train_loss_list)}, Validation loss: {np.mean(val_loss_list)}")
 
         # Save model for inferencing
+        self.save_plots(result['train_loss'], result['val_loss'])
         self.save_model_parameters()
 
         self.time_end = time.time()

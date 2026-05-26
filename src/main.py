@@ -9,4 +9,4 @@ from config import Config
 if __name__ == "__main__":
     config = Config()
     experiment = Experiment(config)
-    experiment.run()
+    results =experiment.run()
