@@ -2,7 +2,7 @@ import os
 import glob
 import torch
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 
@@ -21,6 +21,7 @@ file_model = "model_PDw.pth"
 # 2. DATOS
 path_control = sorted(glob.glob('./data/pd_norm/CTL/**/ws*.nii'))
 path_pd = sorted(glob.glob('./data/pd_norm/PD/**/ws*.nii'))
+
 
 # Forzamos balanceo exacto
 min_samples = min(len(path_control), len(path_pd))
