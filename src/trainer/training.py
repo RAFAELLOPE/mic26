@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 
 class Experiment:
     def __init__(self, config):
+        breakpoint()
         self.n_epochs = config.n_epochs
         self.name = config.name
         self.time_start = ""
@@ -25,7 +26,6 @@ class Experiment:
         dirname = f'{time.strftime("%Y-%m-%d_%H%M", time.gmtime())}_{self.name}'
         self.out_dir = os.path.join(config.test_results_dir, dirname)
         os.makedirs(self.out_dir, exist_ok=True)
-
 
         pd_loader = PDLoader(config)
 

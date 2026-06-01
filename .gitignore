@@ -1,5 +1,7 @@
 *.csv
 .env
+.venv/*
+venv/
 data/
 *.pyc
 *.pht

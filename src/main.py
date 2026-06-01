@@ -1,7 +1,7 @@
 import os
 import sys
 from sklearn.metrics import classification_report
-sys.path.append(os.path.abspath('.\\mic26'))
+sys.path.append(os.path.abspath('.'))
 from src.trainer.training import Experiment
 from config import Config
 
