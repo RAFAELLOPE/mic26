@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt
 
 class Experiment:
     def __init__(self, config):
-        breakpoint()
         self.n_epochs = config.n_epochs
         self.name = config.name
         self.time_start = ""
@@ -28,7 +27,6 @@ class Experiment:
         os.makedirs(self.out_dir, exist_ok=True)
 
         pd_loader = PDLoader(config)
-
         self.train_loader = DataLoader(
             pd_loader.train_ds, 
             batch_size=config.batch_size, 
@@ -110,7 +108,6 @@ class Experiment:
         and no_grad needs to be called so that gradients do not 
         propagate.
         """
-        
         print(f"Validating epoch {self.epoch}...")
         self.model.eval()
         loss_list = []

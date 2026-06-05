@@ -23,6 +23,7 @@ class PDLoader:
         data_dicts = []
         for i, l in enumerate(config.labels):
             data_paths = sorted(glob.glob(f'{config.root_dir}/{l}/**/mwp1*.nii'))
+            data_paths = data_paths[:10] #TODO: Remove this line, only for testing
             for img in data_paths:
                 data_dicts.append(
                     {
@@ -30,7 +31,7 @@ class PDLoader:
                         "label": i
                     }
                 )
-        
+                
         if config.force_balanced_data:
             data_dicts = self._balance_data(data_dicts)
 
