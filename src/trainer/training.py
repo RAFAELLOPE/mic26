@@ -119,7 +119,7 @@ class Experiment:
                 predictions = self.model(inputs)
 
                 loss = self.loss_function(predictions, targets)
-                loss_list.append(loss)
+                loss_list.append(loss.item())
                 
                 if (i % 10) == 0:
                     # Output to the console every 10th batch
