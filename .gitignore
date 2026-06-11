@@ -5,3 +5,4 @@ venv/
 data/
 *.pyc
 *.pht
+*.py.out

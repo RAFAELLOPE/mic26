@@ -11,7 +11,7 @@ class Config:
     self.val_size = 0.15
     self.force_balanced_data = True
     self.n_epochs = 50
-    self.learning_rate = 0.0001
+    self.learning_rate = 0.001
     self.batch_size = 16
     self.classification_threshold= 0.5
     self.test_results_dir = './data'
