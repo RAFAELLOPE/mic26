@@ -26,9 +26,7 @@ class Experiment:
         self.out_dir = os.path.join(config.test_results_dir, dirname)
         os.makedirs(self.out_dir, exist_ok=True)
 
-
         pd_loader = PDLoader(config)
-
         self.train_loader = DataLoader(
             pd_loader.train_ds, 
             batch_size=config.batch_size, 
@@ -110,7 +108,6 @@ class Experiment:
         and no_grad needs to be called so that gradients do not 
         propagate.
         """
-        
         print(f"Validating epoch {self.epoch}...")
         self.model.eval()
         loss_list = []
@@ -122,7 +119,7 @@ class Experiment:
                 predictions = self.model(inputs)
 
                 loss = self.loss_function(predictions, targets)
-                loss_list.append(loss)
+                loss_list.append(loss.item())
                 
                 if (i % 10) == 0:
                     # Output to the console every 10th batch
