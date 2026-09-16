@@ -6,3 +6,4 @@ data/
 *.pyc
 *.pht
 *.py.out
+*.json
