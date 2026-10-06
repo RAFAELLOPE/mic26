@@ -16,12 +16,12 @@ if __name__ == "__main__":
     print("\n" + classification_report(
         out_results['true'], 
         out_results['prediction'], 
-        target_names=['Control (Spec)', 'PD (Sens)'])
+        target_names=[config.labels[0], config.labels[1]])
     )
     # Save results to file
     with open(os.path.join(experiment.out_dir, "test_results.txt"), "w") as f:
         f.write(classification_report(
             out_results['true'], 
             out_results['prediction'], 
-            target_names=['Control (Spec)', 'PD (Sens)'])
+            target_names=[config.labels[0], config.labels[1]])
         )

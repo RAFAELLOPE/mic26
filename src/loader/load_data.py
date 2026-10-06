@@ -21,8 +21,18 @@ class PDLoader:
     def __init__(self, config):
         
         data_dicts = []
+        tissue_prefix = 1      # By default, always consider Grey Matter (GM)
+        process_prefix = 'c'   # By default, always consider native space images
+        if config.tissue_type == 'WM':
+            tissue_prefix = 2
+
+        if config.preprocess_type == 'warped':
+            process_prefix = 'wc'
+        elif config.preprocess_type == 'modulated':
+            process_prefix = 'mwc'
+    
         for i, l in enumerate(config.labels):
-            data_paths = sorted(glob.glob(f'{config.root_dir}/{l}/**/mwp1*.nii'))
+            data_paths = sorted(glob.glob(f'{config.root_dir}/{l}/**/{process_prefix}{tissue_prefix}*.nii'))
             for img in data_paths:
                 data_dicts.append(
                     {
