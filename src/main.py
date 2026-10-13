@@ -1,6 +1,8 @@
 import os
 import sys
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, RocCurveDisplay, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
+import json
 sys.path.append(os.path.abspath('.'))
 from src.trainer.training import Experiment
 from config import Config
@@ -25,3 +27,19 @@ if __name__ == "__main__":
             out_results['prediction'], 
             target_names=[config.labels[0], config.labels[1]])
         )
+
+    # Save results in test as a dictionary 
+    with open(os.path.join(experiment.out_dir, "model_results.json"), 'w') as fp:
+        json.dump(out_results, fp)
+
+    # Save ROC curve
+    RocCurveDisplay.from_predictions(
+        out_results['true'], 
+        out_results['probabilities'])
+    plt.savefig(os.path.join(experiment.out_dir, "ROC_curve.txt"))
+
+    # Save Confusion Matrix
+    ConfusionMatrixDisplay.from_predictions(
+        y_true=out_results['true'],
+        y_pred=out_results['prediction']
+    )
