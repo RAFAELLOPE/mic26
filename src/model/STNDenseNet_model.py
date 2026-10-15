@@ -1,7 +1,8 @@
+import torch
 from torch import nn
 import torch.nn.functional as F
 from monai.networks.nets import DenseNet121
-
+from src.model.DenseNet_model import DenseNetModel
 
 class STN_DenseNet(nn.Module):
     def __init__(

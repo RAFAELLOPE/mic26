@@ -33,13 +33,18 @@ if __name__ == "__main__":
         json.dump(out_results, fp)
 
     # Save ROC curve
+    plt.figure()
     RocCurveDisplay.from_predictions(
         out_results['true'], 
         out_results['probabilities'])
-    plt.savefig(os.path.join(experiment.out_dir, "ROC_curve.txt"))
+    plt.savefig(os.path.join(experiment.out_dir, "ROC_curve.png"))
+    plt.close()
 
     # Save Confusion Matrix
+    plt.figure()
     ConfusionMatrixDisplay.from_predictions(
         y_true=out_results['true'],
         y_pred=out_results['prediction']
     )
+    plt.savefig(os.path.join(experiment.out_dir, "confusion_matrix.png"))
+    plt.close()

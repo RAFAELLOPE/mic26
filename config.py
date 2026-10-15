@@ -4,9 +4,9 @@ class Config:
   Holds configuration parameters
   """
   def __init__(self):
-    self.name = "ADNI_Basic_DenseNet_NB_mci_vs_ad_warped_GM"
+    self.name = "ADNI_Basic_DenseNet_NB_mci_vs_ad_native_GM"
     self.root_dir = '/lustre/home/rlopez/adni2'
-    self.preprocess_type = 'warped'
+    self.preprocess_type = 'native'
     self.tissue_type = 'GM'
     self.labels = ['MCI', 'AD']
     self.test_size = 0.2
