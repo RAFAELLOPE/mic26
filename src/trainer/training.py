@@ -5,6 +5,7 @@ import torch
 from monai.data import DataLoader
 from src.loader.load_data import PDLoader
 from src.model.DenseNet_model import DenseNetModel
+from src.model.STNDenseNet_model import STN_DenseNet
 from src.trainer.inference import InferenceAgent
 import numpy as np
 import matplotlib.pyplot as plt
@@ -46,16 +47,25 @@ class Experiment:
 
         # Check CUDA is available
         if not torch.cuda.is_available():
+            print('\n')
             print("WARNING: No CUDA device is found. This may take significantly longer!")
+            print('\n')
     
         self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         
         # Load the model
-        self.model = DenseNetModel(
-            spatial_dims=3, 
-            in_channels=1, 
-            out_channels=1
-        ).to(self.device)
+        if config.model == 'ST':
+            self.model = STN_DenseNet(
+                spatial_dims=3,
+                in_channels=1,
+                out_channels=1
+            ).to(self.device)
+        else:    
+            self.model = DenseNetModel(
+                spatial_dims=3, 
+                in_channels=1, 
+                out_channels=1
+            ).to(self.device)
 
         # Set loss function
         self.loss_function = torch.nn.BCEWithLogitsLoss()
