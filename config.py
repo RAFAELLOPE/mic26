@@ -6,7 +6,7 @@ class Config:
   def __init__(self):
     self.root_dir = '/lustre/home/rlopez/adni2'
     self.model = 'ST'
-    self.preprocess_type = 'native'
+    self.preprocess_type = 'warped'
     self.tissue_type = 'GM'
     self.labels = ['Normal', 'AD']
     self.test_size = 0.2

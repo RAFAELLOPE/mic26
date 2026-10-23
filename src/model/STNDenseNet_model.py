@@ -19,7 +19,7 @@ class STN_DenseNet(nn.Module):
             dropout_prob=0.0
         ):
         super(STN_DenseNet, self).__init__()
-        self.dense_net = DenseNetModel(
+        self.dense_net = DenseNet121(
             spatial_dims=spatial_dims,
             in_channels=in_channels,
             out_channels=out_channels,
