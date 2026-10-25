@@ -1,22 +1,31 @@
 import torch
 import os
 from src.model.DenseNet_model import DenseNetModel
+from src.model.STNDenseNet_model import STN_DenseNet
 
 class InferenceAgent:
     def __init__(self, 
                  parameter_file_path = '', 
                  model=None, 
-                 device='cpu'):
+                 device='cpu',
+                 model_type='Basic'):
         
         self.model = model
         self.device = device
 
         if model == None:
-            self.model = DenseNetModel(
-                spatial_dims=3, 
-                in_channels=1, 
-                out_channels=1
-            )
+            if model_type == 'ST':
+                self.model = STN_DenseNet(
+                    spatial_dims=3,
+                    in_channels=1,
+                    out_channels=1
+                )
+            else:    
+                self.model = DenseNetModel(
+                    spatial_dims=3, 
+                    in_channels=1, 
+                    out_channels=1
+                )
 
         if os.path.exists(parameter_file_path):
             self.model.load_state_dict(

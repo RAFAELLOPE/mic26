@@ -63,16 +63,14 @@ class STN_DenseNet(nn.Module):
         xs = xs.view(-1, 10*30*30*30)
         theta = self.fc_loc(xs)
         theta = theta.view(-1, 3, 4)
-
+        # align_corners=True
         grid = F.affine_grid(
             theta, 
-            x.size(), 
-            align_corners=True
+            x.size()
         )
         x = F.grid_sample(
             x, 
-            grid, 
-            align_corners=True
+            grid
         )
 
         return x

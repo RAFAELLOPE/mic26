@@ -94,10 +94,10 @@ class Experiment:
         for i, batch in enumerate(self.train_loader):
             inputs = batch["image"].to(self.device).type(torch.float)
             targets = batch["label"].to(self.device).unsqueeze(1).type(torch.float)
-            predictions = self.model(inputs)
-            loss = self.loss_function(predictions, targets)
             
             self.optimizer.zero_grad()
+            predictions = self.model(inputs)
+            loss = self.loss_function(predictions, targets)
             loss.backward()
             self.optimizer.step()
             
